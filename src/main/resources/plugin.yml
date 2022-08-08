@@ -1,0 +1,8 @@
+name: AnChIgV2
+version: '${project.version}'
+main: anchig.AnChIg
+api-version: 1.19
+prefix: AnChIg
+load: STARTUP
+authors: [ Bredosen ]
+description: Custom Plugin for AnChIg
