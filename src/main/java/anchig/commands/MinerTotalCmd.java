@@ -1,6 +1,7 @@
 package anchig.commands;
 
 import anchig.handlers.TextUtils;
+import anchig.manager.MinerTotalManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -86,7 +87,7 @@ public final class MinerTotalCmd extends BukkitCommand {
     }
 
     public final void sendDaysLeft(final CommandSender sender) {
-        sender.sendMessage(TextUtils.value("Challenge ends in ", getDays(new Date()), " days"));
+        sender.sendMessage(TextUtils.value("Challenge ends in ", MinerTotalManager.getDays(), " days"));
     }
 
     public final long getMinedBlocks(final OfflinePlayer player) {
@@ -106,13 +107,5 @@ public final class MinerTotalCmd extends BukkitCommand {
         final HashMap<String, Long> temp = new LinkedHashMap<>();
         for (Map.Entry<String, Long> aa : list) temp.put(aa.getKey(), aa.getValue());
         return temp;
-    }
-
-    public final long getDays(Date d1) {
-        final Calendar calendar = Calendar.getInstance();
-        calendar.set(2022, 7, 20);
-        final Date d2 = calendar.getTime();
-        final long diff = d2.getTime() - d1.getTime();
-        return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 }
