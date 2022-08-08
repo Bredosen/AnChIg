@@ -1,7 +1,6 @@
 package anchig.commands;
 
 // Imports AnChIg libraries.
-
 import anchig.handlers.DecimalFormatter;
 import anchig.handlers.TextUtils;
 
@@ -12,7 +11,6 @@ import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Vehicle;
 
 // Imports java libraries.
 import java.util.ArrayList;
@@ -25,45 +23,89 @@ import java.util.Arrays;
  */
 public final class HorseCmd extends BukkitCommand {
 
-    public HorseCmd(final String name) { // Setup command.
-        super(name); // Call super command.
-        setAliases(new ArrayList<String>(Arrays.asList("HorseInformation"))); // Set /Horse alias as /HorseInformation.
-        setUsage("/<command>"); // Set usage for command.
-        setDescription("See information about the currently riding horse"); // Set description for command.
+    // Setup command.
+    public HorseCmd(final String name) {
+        // Call super command.
+        super(name);
+
+        // Set /Horse alias as /HorseInformation.
+        setAliases(new ArrayList<String>(Arrays.asList("HorseInformation")));
+
+        // Set usage for command.
+        setUsage("/<command>");
+
+        // Set description for command.
+        setDescription("See information about the currently riding horse");
     }
 
-    @Override // Command executor method
+    // Command executor method
+    @Override
     public boolean execute(final CommandSender sender, final String commandLabel, final String[] args) {
-        if (!(sender instanceof Player player)) { // Checks if sender is not a player
-            sender.sendMessage(TextUtils.onlyPlayer()); // Sends only player can execute this command to sender.
-            return true; // End command.
+        // Checks if sender is not a player
+        if (!(sender instanceof Player player)) {
+
+            // Sends only player can execute this command to sender.
+            sender.sendMessage(TextUtils.onlyPlayer());
+
+            // End command.
+            return true;
         }
 
-        Entity vehicle; // create empty entity instance.
-        if ((vehicle = player.getVehicle()) == null) { // Checks if player has vehicle and sets instance.
-            sendNeedHorse(player); // Sends need horse message to player.
-            return true; // End command.
+        // create empty entity instance.
+        Entity vehicle;
+
+        // Checks if player has vehicle and sets instance.
+        if ((vehicle = player.getVehicle()) == null) {
+
+            // Sends need horse message to player.
+            sendNeedHorse(player);
+
+            // End command.
+            return true;
         }
 
-        if (!(vehicle instanceof Horse horse)) { // Checks if player is riding a horse.
-            sendNeedHorse(player); // Sends need horse message to player.
-            return true; // End command.
+        // Checks if player is riding a horse.
+        if (!(vehicle instanceof Horse horse)) {
+
+            // Sends need horse message to player.
+            sendNeedHorse(player);
+
+            // End command.
+            return true;
         }
 
-        sendHorseInformation(player, horse); // Send horse information to player.
-        return true; // Return command.
+        // Send horse information to player.
+        sendHorseInformation(player, horse);
+
+        // Return command.
+        return true;
     }
 
-    public final void sendHorseInformation(final Player player, final Horse horse) { // sends horse information to player method.
-        player.sendMessage(TextUtils.top("Horse")); // Sends horse top message to player.
-        player.sendMessage(TextUtils.value("Name: ", horse.getName(), ".")); // Sends horse name to player.
-        player.sendMessage(TextUtils.value("Speed: ", DecimalFormatter.format(horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getValue() * 43.17D), "b/sec")); // Sends horse speed to player.
-        player.sendMessage(TextUtils.value("Jump: ", horse.getJumpStrength(), ".")); // Sends horse jump force to player.
-        player.sendMessage(TextUtils.value("Age: ", horse.getAge(), ".")); // Sends horse age to player.
-        player.sendMessage(TextUtils.value("Color: ", horse.getColor().name(), ".")); // Sends horse color to player.
+    // sends horse information to player method.
+    public final void sendHorseInformation(final Player player, final Horse horse) {
+        // Sends horse top message to player.
+        player.sendMessage(TextUtils.top("Horse"));
+
+        // Sends horse name to player.
+        player.sendMessage(TextUtils.value("Name: ", horse.getName(), "."));
+
+        // Sends horse speed to player.
+        player.sendMessage(TextUtils.value("Speed: ", DecimalFormatter.format(horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getValue() * 43.17D), "b/sec"));
+
+        // Sends horse jump force to player.
+        player.sendMessage(TextUtils.value("Jump: ", horse.getJumpStrength(), "."));
+
+        // Sends horse age to player.
+        player.sendMessage(TextUtils.value("Age: ", horse.getAge(), "."));
+
+        // Sends horse color to player.
+        player.sendMessage(TextUtils.value("Color: ", horse.getColor().name(), "."));
     }
 
-    public final void sendNeedHorse(final Player player) { // Sends need horse message to player method.
-        player.sendMessage(TextUtils.error("You need to be riding a horse for this command")); // Sends message to player.
+    // Sends need horse message to player method.
+    public final void sendNeedHorse(final Player player) {
+
+        // Sends message to player.
+        player.sendMessage(TextUtils.error("You need to be riding a horse for this command"));
     }
 }
